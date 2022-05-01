@@ -22,12 +22,8 @@ repos:
     hooks:
       - id: isort
         name: isort (python)
-  - repo: local
+  - repo: https://github.com/pycqa/flake8
+    rev: 4.0.1
     hooks:
       - id: flake8
-        name: Flake8
-        description: This hook runs flake8 within our project's poetry environment.
-        entry: poetry run pflake8
-        language: system
-        types: [python]
-        require_serial: true
+        args: [--max-line-length=120, --ignore=ANN101,D107,W503]
