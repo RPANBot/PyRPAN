@@ -48,7 +48,7 @@ profile = "hug"
 
 [tool.flake8]
 max-line-length = 120
-ignore = "ANN101,D107,W503"
+ignore = "ANN101"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
