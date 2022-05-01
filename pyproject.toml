@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "PyRPAN"
+version = "1.0.0"
+description = "An API wrapper for interacting with the RPAN API."
+authors = ["b1uejay27 <hello@b1uejay27.tech>"]
+license = "MIT"
+repository = "https://github.com/b1uejay27/RPANBot"
+readme = "README.md"
+
+packages = [
+    { include = "pyrpan" },
+    { include = "pyrpan/*.py" },
+]
+classifiers=[
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Typing :: Typed"
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+asyncpraw = "^7.5.0"
+aiohttp = "^3.8.1"
+expiringdict = "^1.2.1"
+
+[tool.poetry.dev-dependencies]
+black = "^22.3.0"
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+flake8-bugbear = "^22.4.25"
+flake8-annotations = "^2.9.0"
+mkdocs = "^1.3.0"
+mkdocstrings = "^0.18.1"
+pytkdocs = {extras = ["numpy-style"], version = "^0.16.1"}
+mkdocs-material = "^8.2.12"
+pyproject-flake8 = "^0.0.1-alpha.4"
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "hug"
+
+[tool.flake8]
+max-line-length = 120
+ignore = "ANN101,D107,W503"
+exclude = ".cache,.venv,.git,__pycache__"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

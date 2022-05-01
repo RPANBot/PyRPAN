@@ -1,0 +1,28 @@
+site_name: PyRPAN
+site_url: https://pyrpan.b1uejay27.tech
+
+repo_url: https://github.com/b1uejay27/PyRPAN/
+repo_name: b1uejay27/PyRPAN
+
+theme:
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+  name: "material"
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Code Reference: code-reference.md
+
+plugins:
+  - search
+  - mkdocstrings

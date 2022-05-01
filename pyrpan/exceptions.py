@@ -1,0 +1,6 @@
+class BaseException(Exception):
+    ...
+
+
+class InvalidRequest(BaseException):
+    ...
