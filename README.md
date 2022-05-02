@@ -22,7 +22,7 @@ from pyrpan import PyRPAN
 rpan = PyRPAN(client_id='client id here', client_secret='client secret here')
 
 async def main():
-    broadcasts = await rpan.get_broadcast(id='stream id here')    
+    broadcasts = await rpan.get_broadcast(id='stream id here')  
     print(broadcast.url)
 
     await rpan.close()
