@@ -72,6 +72,7 @@ class PyRPAN:
         Returns
         -------
         Optional[dict]
+            The response from the API.
         """
         if headers is None:
             headers = {}
@@ -111,6 +112,7 @@ class PyRPAN:
         Returns
         -------
         list
+            The list of viewer subreddits.
         """
         data = await self.fetch(method="GET", route="/recommended_viewer_subreddits")
         return data["data"]
@@ -126,11 +128,11 @@ class PyRPAN:
         Returns
         -------
         Broadcast
+            The retrived broadcast or None.
         """
         data = await self.fetch(method="GET", route=f"/broadcasts/{id}")
         if data["status"] == "success":
             payload = data["data"]
-            payload["source"] = "strapi"
 
             return Broadcast(payload=payload)
         else:
@@ -143,6 +145,7 @@ class PyRPAN:
         Returns
         -------
         Broadcasts
+            The retrived broadcasts or None.
         """
         data = await self.fetch(method="GET", route="/broadcasts")
         if data["status"] == "success":
@@ -150,7 +153,6 @@ class PyRPAN:
             if len(data["data"]):
                 for broadcast in data["data"]:
                     payload = broadcast
-                    payload["source"] = "strapi"
                     broadcasts.append(Broadcast(payload=payload))
 
                 return Broadcasts(contents=broadcasts)
@@ -169,6 +171,7 @@ class PyRPAN:
         Returns
         -------
         Broadcast
+            The found last broadcast or None.
         """
         user = await self.reddit.redditor(username)
 
@@ -189,6 +192,7 @@ class PyRPAN:
         Returns
         -------
         tuple
+            A tuple of the top broadcasts in each subreddit and the time period used.
         """
         allowed_time_periods = [
             "hour",
@@ -234,6 +238,7 @@ class PyRPAN:
         Returns
         -------
         Broadcast
+            The broadcast class.
         """
         return Broadcast(
             payload={
@@ -263,6 +268,7 @@ class PyRPAN:
         Returns
         -------
         str
+            The timestamp in a set format.
         """
         return datetime.fromtimestamp(int(timestamp), tz=timezone.utc)
 
@@ -278,6 +284,7 @@ class PyRPAN:
         Returns
         -------
         bool
+            If the link is a valid RPAN broadcast.
         """
         if "reddit.com/rpan/" in link:
             return True
