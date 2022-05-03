@@ -39,7 +39,7 @@ class PyRPAN:
         client_id : str
             Client ID generated from creating an app at https://old.reddit.com/prefs/apps/.
         client_secret : str
-            Client Secrt generated from creating an app at https://old.reddit.com/prefs/apps/.
+            Client Secret generated from creating an app at https://old.reddit.com/prefs/apps/.
         """
         self.api_url = "https://strapi.reddit.com"
         self.top_broadcasts_cache = ExpiringDict(max_len=3, max_age_seconds=300)

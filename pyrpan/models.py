@@ -61,7 +61,7 @@ class Broadcast:
         self.title = payload["post"]["title"]
         self.url = payload["post"]["url"]
         self.score = payload["post"]["score"]
-        self.comment_count = payload["post"]["comment_count"]
+        self.comment_count = payload["post"]["commentCount"]
         if payload["post"]["authorInfo"]:
             self.author_name = payload["post"]["authorInfo"]["name"]
         else:
