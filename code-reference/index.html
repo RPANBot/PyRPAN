@@ -414,12 +414,39 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#pyrpan.models.Broadcast" class="md-nav__link">
+    Broadcast
+  </a>
+  
+    <nav class="md-nav" aria-label="Broadcast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pyrpan.models.Broadcast.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pyrpan.models.Broadcasts" class="md-nav__link">
     Broadcasts
   </a>
   
     <nav class="md-nav" aria-label="Broadcasts">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pyrpan.models.Broadcasts.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#pyrpan.models.Broadcasts.has_broadcast" class="md-nav__link">
@@ -605,12 +632,39 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#pyrpan.models.Broadcast" class="md-nav__link">
+    Broadcast
+  </a>
+  
+    <nav class="md-nav" aria-label="Broadcast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pyrpan.models.Broadcast.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pyrpan.models.Broadcasts" class="md-nav__link">
     Broadcasts
   </a>
   
     <nav class="md-nav" aria-label="Broadcasts">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pyrpan.models.Broadcasts.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#pyrpan.models.Broadcasts.has_broadcast" class="md-nav__link">
@@ -816,6 +870,7 @@ PyRPAN        </code>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Optional[dict]</span>
+<span class="sd">            The response from the API.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">headers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">headers</span> <span class="o">=</span> <span class="p">{}</span>
@@ -855,6 +910,7 @@ PyRPAN        </code>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        list</span>
+<span class="sd">            The list of viewer subreddits.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="s2">&quot;/recommended_viewer_subreddits&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
@@ -870,11 +926,11 @@ PyRPAN        </code>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Broadcast</span>
+<span class="sd">            The retrived broadcast or None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;/broadcasts/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
             <span class="n">payload</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
-            <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;strapi&quot;</span>
 
             <span class="k">return</span> <span class="n">Broadcast</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -887,6 +943,7 @@ PyRPAN        </code>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Broadcasts</span>
+<span class="sd">            The retrived broadcasts or None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="s2">&quot;/broadcasts&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
@@ -894,7 +951,6 @@ PyRPAN        </code>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]):</span>
                 <span class="k">for</span> <span class="n">broadcast</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]:</span>
                     <span class="n">payload</span> <span class="o">=</span> <span class="n">broadcast</span>
-                    <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;strapi&quot;</span>
                     <span class="n">broadcasts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Broadcast</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">))</span>
 
                 <span class="k">return</span> <span class="n">Broadcasts</span><span class="p">(</span><span class="n">contents</span><span class="o">=</span><span class="n">broadcasts</span><span class="p">)</span>
@@ -913,6 +969,7 @@ PyRPAN        </code>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Broadcast</span>
+<span class="sd">            The found last broadcast or None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">user</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">reddit</span><span class="o">.</span><span class="n">redditor</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
 
@@ -933,6 +990,7 @@ PyRPAN        </code>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        tuple</span>
+<span class="sd">            A tuple of the top broadcasts in each subreddit and the time period used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">allowed_time_periods</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s2">&quot;hour&quot;</span><span class="p">,</span>
@@ -978,6 +1036,7 @@ PyRPAN        </code>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Broadcast</span>
+<span class="sd">            The broadcast class.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Broadcast</span><span class="p">(</span>
             <span class="n">payload</span><span class="o">=</span><span class="p">{</span>
@@ -1007,6 +1066,7 @@ PyRPAN        </code>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        str</span>
+<span class="sd">            The timestamp in a set format.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">timestamp</span><span class="p">),</span> <span class="n">tz</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
 
@@ -1022,6 +1082,7 @@ PyRPAN        </code>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        bool</span>
+<span class="sd">            If the link is a valid RPAN broadcast.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s2">&quot;reddit.com/rpan/&quot;</span> <span class="ow">in</span> <span class="n">link</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -1204,7 +1265,7 @@ PyRPAN        </code>
   <tbody>
     <tr>
       <td><code>Optional[dict]</code></td>
-      <td></td>
+      <td><p>The response from the API.</p></td>
     </tr>
   </tbody>
 </table>
@@ -1226,6 +1287,7 @@ PyRPAN        </code>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Optional[dict]</span>
+<span class="sd">        The response from the API.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">headers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1309,7 +1371,7 @@ PyRPAN        </code>
   <tbody>
     <tr>
       <td><code>str</code></td>
-      <td></td>
+      <td><p>The timestamp in a set format.</p></td>
     </tr>
   </tbody>
 </table>
@@ -1327,6 +1389,7 @@ PyRPAN        </code>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    str</span>
+<span class="sd">        The timestamp in a set format.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">timestamp</span><span class="p">),</span> <span class="n">tz</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
 </code></pre></div>
@@ -1384,7 +1447,7 @@ PyRPAN        </code>
   <tbody>
     <tr>
       <td><code>Optional[pyrpan.models.Broadcast]</code></td>
-      <td></td>
+      <td><p>The retrived broadcast or None.</p></td>
     </tr>
   </tbody>
 </table>
@@ -1401,11 +1464,11 @@ PyRPAN        </code>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Broadcast</span>
+<span class="sd">        The retrived broadcast or None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;/broadcasts/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
         <span class="n">payload</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
-        <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;strapi&quot;</span>
 
         <span class="k">return</span> <span class="n">Broadcast</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1446,7 +1509,7 @@ PyRPAN        </code>
   <tbody>
     <tr>
       <td><code>Optional[pyrpan.models.Broadcasts]</code></td>
-      <td></td>
+      <td><p>The retrived broadcasts or None.</p></td>
     </tr>
   </tbody>
 </table>
@@ -1459,6 +1522,7 @@ PyRPAN        </code>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Broadcasts</span>
+<span class="sd">        The retrived broadcasts or None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="s2">&quot;/broadcasts&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
@@ -1466,7 +1530,6 @@ PyRPAN        </code>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]):</span>
             <span class="k">for</span> <span class="n">broadcast</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]:</span>
                 <span class="n">payload</span> <span class="o">=</span> <span class="n">broadcast</span>
-                <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;strapi&quot;</span>
                 <span class="n">broadcasts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Broadcast</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">))</span>
 
             <span class="k">return</span> <span class="n">Broadcasts</span><span class="p">(</span><span class="n">contents</span><span class="o">=</span><span class="n">broadcasts</span><span class="p">)</span>
@@ -1527,7 +1590,7 @@ PyRPAN        </code>
   <tbody>
     <tr>
       <td><code>Optional[pyrpan.models.Broadcast]</code></td>
-      <td></td>
+      <td><p>The found last broadcast or None.</p></td>
     </tr>
   </tbody>
 </table>
@@ -1545,6 +1608,7 @@ PyRPAN        </code>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Broadcast</span>
+<span class="sd">        The found last broadcast or None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">user</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">reddit</span><span class="o">.</span><span class="n">redditor</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
 
@@ -1607,7 +1671,7 @@ PyRPAN        </code>
   <tbody>
     <tr>
       <td><code>tuple</code></td>
-      <td></td>
+      <td><p>A tuple of the top broadcasts in each subreddit and the time period used.</p></td>
     </tr>
   </tbody>
 </table>
@@ -1625,6 +1689,7 @@ PyRPAN        </code>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    tuple</span>
+<span class="sd">        A tuple of the top broadcasts in each subreddit and the time period used.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">allowed_time_periods</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;hour&quot;</span><span class="p">,</span>
@@ -1693,7 +1758,7 @@ PyRPAN        </code>
   <tbody>
     <tr>
       <td><code>list</code></td>
-      <td></td>
+      <td><p>The list of viewer subreddits.</p></td>
     </tr>
   </tbody>
 </table>
@@ -1706,6 +1771,7 @@ PyRPAN        </code>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    list</span>
+<span class="sd">        The list of viewer subreddits.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="s2">&quot;/recommended_viewer_subreddits&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
@@ -1761,7 +1827,7 @@ PyRPAN        </code>
   <tbody>
     <tr>
       <td><code>bool</code></td>
-      <td></td>
+      <td><p>If the link is a valid RPAN broadcast.</p></td>
     </tr>
   </tbody>
 </table>
@@ -1779,6 +1845,7 @@ PyRPAN        </code>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    bool</span>
+<span class="sd">        If the link is a valid RPAN broadcast.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="s2">&quot;reddit.com/rpan/&quot;</span> <span class="ow">in</span> <span class="n">link</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span>
@@ -1839,7 +1906,7 @@ PyRPAN        </code>
   <tbody>
     <tr>
       <td><code>Optional[pyrpan.models.Broadcast]</code></td>
-      <td></td>
+      <td><p>The broadcast class.</p></td>
     </tr>
   </tbody>
 </table>
@@ -1857,6 +1924,7 @@ PyRPAN        </code>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Broadcast</span>
+<span class="sd">        The broadcast class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Broadcast</span><span class="p">(</span>
         <span class="n">payload</span><span class="o">=</span><span class="p">{</span>
@@ -1929,6 +1997,381 @@ PyRPAN        </code>
 
 
 
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="pyrpan.models.Broadcast" class="doc doc-heading">
+        <code>
+Broadcast        </code>
+
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>pyrpan\models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Broadcast</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The broadcast class containing most of the information about a broadcast.</span>
+
+<span class="sd">        Attributes</span>
+<span class="sd">        ----------</span>
+<span class="sd">        id : str</span>
+<span class="sd">            The ID of the broadcast.</span>
+<span class="sd">        title : str</span>
+<span class="sd">            The title of the broadcast.</span>
+<span class="sd">        url : str</span>
+<span class="sd">            The URL of the broadcast.</span>
+<span class="sd">        thumbnail : str</span>
+<span class="sd">            The URL of the thumbnail of the broadcast.</span>
+<span class="sd">        score : int</span>
+<span class="sd">            The total score of the broadcast.</span>
+<span class="sd">        comment_count : int</span>
+<span class="sd">            The total number of comments on the broadcast.</span>
+<span class="sd">        created : int</span>
+<span class="sd">            The timestamp of when the broadcast was created.</span>
+<span class="sd">        author_name : str</span>
+<span class="sd">            The username of the author of the broadcast (Returns &#39;u/[deleted]&#39; if username is not found).</span>
+<span class="sd">        subreddit_name : str</span>
+<span class="sd">            The name of the subreddit the broadcast is in.</span>
+<span class="sd">        published_at : int</span>
+<span class="sd">            The timestamp of when the broadcast was started.</span>
+<span class="sd">        upvotes : int</span>
+<span class="sd">            The total number of upvotes on the broadcast.</span>
+<span class="sd">        downvotes : int</span>
+<span class="sd">            The total number of downvotes on the broadcast.</span>
+<span class="sd">        is_first_broadcast : bool</span>
+<span class="sd">            If the broadcast is the author&#39;s first broadcast.</span>
+<span class="sd">        chat_disabled : bool</span>
+<span class="sd">            If the chat is disabled for the broadcast.</span>
+<span class="sd">        broadcast_time : str</span>
+<span class="sd">            The current running time of the broadcast.</span>
+<span class="sd">        estimated_remaining_time : str</span>
+<span class="sd">            The estimated remaining time of the broadcast.</span>
+<span class="sd">        is_live : bool</span>
+<span class="sd">            If the broadcast is currently live.</span>
+<span class="sd">        rank : int</span>
+<span class="sd">            The rank of the broadcast.</span>
+<span class="sd">        global_rank : int</span>
+<span class="sd">            The global rank of the broadcast.</span>
+<span class="sd">        subreddit_rank : int</span>
+<span class="sd">            The rank of the broadcast in the subreddit.</span>
+<span class="sd">        total_streams : int</span>
+<span class="sd">            The total number of streams in the subreddit.</span>
+<span class="sd">        unique_watchers : int</span>
+<span class="sd">            The number of unique watchers of the broadcast.</span>
+<span class="sd">        continuous_watchers : int</span>
+<span class="sd">            The number of continuous watchers of the broadcast.</span>
+<span class="sd">        total_continuous_watchers : int</span>
+<span class="sd">            The total number of continuous watchers of the broadcast.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;score&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comment_count</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;comment_count&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;authorInfo&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">author_name</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;authorInfo&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">author_name</span> <span class="o">=</span> <span class="s2">&quot;[deleted]&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subreddit_name</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;subreddit&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">published_at</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;stream&quot;</span><span class="p">][</span><span class="s2">&quot;publish_at&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upvotes</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;upvotes&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downvotes</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;downvotes&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_first_broadcast</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;is_first_broadcast&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chat_disabled</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;chat_disabled&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">broadcast_time</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;broadcast_time&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">estimated_remaining_time</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;estimated_remaining_time&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;stream&quot;</span><span class="p">][</span><span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;IS_LIVE&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_live</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_live</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;rank&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_rank</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;global_rank&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subreddit_rank</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;rank_in_subreddit&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_streams</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;total_streams&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unique_watchers</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;unique_watchers&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">continuous_watchers</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;continuous_watchers&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_continuous_watchers</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;total_continuous_watchers&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;stream&quot;</span><span class="p">][</span><span class="s2">&quot;thumbnail&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Broadcast(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">)&quot;</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="pyrpan.models.Broadcast.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>The broadcast class containing most of the information about a broadcast.</p>
+
+<p><strong>Attributes:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>id</code></td>
+        <td><code>str</code></td>
+        <td><p>The ID of the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>title</code></td>
+        <td><code>str</code></td>
+        <td><p>The title of the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>url</code></td>
+        <td><code>str</code></td>
+        <td><p>The URL of the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>thumbnail</code></td>
+        <td><code>str</code></td>
+        <td><p>The URL of the thumbnail of the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>score</code></td>
+        <td><code>int</code></td>
+        <td><p>The total score of the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>comment_count</code></td>
+        <td><code>int</code></td>
+        <td><p>The total number of comments on the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>created</code></td>
+        <td><code>int</code></td>
+        <td><p>The timestamp of when the broadcast was created.</p></td>
+      </tr>
+      <tr>
+        <td><code>author_name</code></td>
+        <td><code>str</code></td>
+        <td><p>The username of the author of the broadcast (Returns 'u/[deleted]' if username is not found).</p></td>
+      </tr>
+      <tr>
+        <td><code>subreddit_name</code></td>
+        <td><code>str</code></td>
+        <td><p>The name of the subreddit the broadcast is in.</p></td>
+      </tr>
+      <tr>
+        <td><code>published_at</code></td>
+        <td><code>int</code></td>
+        <td><p>The timestamp of when the broadcast was started.</p></td>
+      </tr>
+      <tr>
+        <td><code>upvotes</code></td>
+        <td><code>int</code></td>
+        <td><p>The total number of upvotes on the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>downvotes</code></td>
+        <td><code>int</code></td>
+        <td><p>The total number of downvotes on the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>is_first_broadcast</code></td>
+        <td><code>bool</code></td>
+        <td><p>If the broadcast is the author's first broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>chat_disabled</code></td>
+        <td><code>bool</code></td>
+        <td><p>If the chat is disabled for the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>broadcast_time</code></td>
+        <td><code>str</code></td>
+        <td><p>The current running time of the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>estimated_remaining_time</code></td>
+        <td><code>str</code></td>
+        <td><p>The estimated remaining time of the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>is_live</code></td>
+        <td><code>bool</code></td>
+        <td><p>If the broadcast is currently live.</p></td>
+      </tr>
+      <tr>
+        <td><code>rank</code></td>
+        <td><code>int</code></td>
+        <td><p>The rank of the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>global_rank</code></td>
+        <td><code>int</code></td>
+        <td><p>The global rank of the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>subreddit_rank</code></td>
+        <td><code>int</code></td>
+        <td><p>The rank of the broadcast in the subreddit.</p></td>
+      </tr>
+      <tr>
+        <td><code>total_streams</code></td>
+        <td><code>int</code></td>
+        <td><p>The total number of streams in the subreddit.</p></td>
+      </tr>
+      <tr>
+        <td><code>unique_watchers</code></td>
+        <td><code>int</code></td>
+        <td><p>The number of unique watchers of the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>continuous_watchers</code></td>
+        <td><code>int</code></td>
+        <td><p>The number of continuous watchers of the broadcast.</p></td>
+      </tr>
+      <tr>
+        <td><code>total_continuous_watchers</code></td>
+        <td><code>int</code></td>
+        <td><p>The total number of continuous watchers of the broadcast.</p></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pyrpan\models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The broadcast class containing most of the information about a broadcast.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    id : str</span>
+<span class="sd">        The ID of the broadcast.</span>
+<span class="sd">    title : str</span>
+<span class="sd">        The title of the broadcast.</span>
+<span class="sd">    url : str</span>
+<span class="sd">        The URL of the broadcast.</span>
+<span class="sd">    thumbnail : str</span>
+<span class="sd">        The URL of the thumbnail of the broadcast.</span>
+<span class="sd">    score : int</span>
+<span class="sd">        The total score of the broadcast.</span>
+<span class="sd">    comment_count : int</span>
+<span class="sd">        The total number of comments on the broadcast.</span>
+<span class="sd">    created : int</span>
+<span class="sd">        The timestamp of when the broadcast was created.</span>
+<span class="sd">    author_name : str</span>
+<span class="sd">        The username of the author of the broadcast (Returns &#39;u/[deleted]&#39; if username is not found).</span>
+<span class="sd">    subreddit_name : str</span>
+<span class="sd">        The name of the subreddit the broadcast is in.</span>
+<span class="sd">    published_at : int</span>
+<span class="sd">        The timestamp of when the broadcast was started.</span>
+<span class="sd">    upvotes : int</span>
+<span class="sd">        The total number of upvotes on the broadcast.</span>
+<span class="sd">    downvotes : int</span>
+<span class="sd">        The total number of downvotes on the broadcast.</span>
+<span class="sd">    is_first_broadcast : bool</span>
+<span class="sd">        If the broadcast is the author&#39;s first broadcast.</span>
+<span class="sd">    chat_disabled : bool</span>
+<span class="sd">        If the chat is disabled for the broadcast.</span>
+<span class="sd">    broadcast_time : str</span>
+<span class="sd">        The current running time of the broadcast.</span>
+<span class="sd">    estimated_remaining_time : str</span>
+<span class="sd">        The estimated remaining time of the broadcast.</span>
+<span class="sd">    is_live : bool</span>
+<span class="sd">        If the broadcast is currently live.</span>
+<span class="sd">    rank : int</span>
+<span class="sd">        The rank of the broadcast.</span>
+<span class="sd">    global_rank : int</span>
+<span class="sd">        The global rank of the broadcast.</span>
+<span class="sd">    subreddit_rank : int</span>
+<span class="sd">        The rank of the broadcast in the subreddit.</span>
+<span class="sd">    total_streams : int</span>
+<span class="sd">        The total number of streams in the subreddit.</span>
+<span class="sd">    unique_watchers : int</span>
+<span class="sd">        The number of unique watchers of the broadcast.</span>
+<span class="sd">    continuous_watchers : int</span>
+<span class="sd">        The number of continuous watchers of the broadcast.</span>
+<span class="sd">    total_continuous_watchers : int</span>
+<span class="sd">        The total number of continuous watchers of the broadcast.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;score&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">comment_count</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;comment_count&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;authorInfo&quot;</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">author_name</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;authorInfo&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">author_name</span> <span class="o">=</span> <span class="s2">&quot;[deleted]&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">subreddit_name</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;subreddit&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">published_at</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;stream&quot;</span><span class="p">][</span><span class="s2">&quot;publish_at&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">upvotes</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;upvotes&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">downvotes</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;downvotes&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">is_first_broadcast</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;is_first_broadcast&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">chat_disabled</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;chat_disabled&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">broadcast_time</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;broadcast_time&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">estimated_remaining_time</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;estimated_remaining_time&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;stream&quot;</span><span class="p">][</span><span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;IS_LIVE&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_live</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_live</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;rank&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">global_rank</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;global_rank&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">subreddit_rank</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;rank_in_subreddit&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total_streams</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;total_streams&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">unique_watchers</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;unique_watchers&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">continuous_watchers</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;continuous_watchers&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total_continuous_watchers</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;total_continuous_watchers&quot;</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;stream&quot;</span><span class="p">][</span><span class="s2">&quot;thumbnail&quot;</span><span class="p">]</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
 
   <div class="doc doc-object doc-class">
 
@@ -1949,6 +2392,14 @@ Broadcasts        </code>
           <summary>Source code in <code>pyrpan\models.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Broadcasts</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The broadcast list class containing all of the broadcasts fetched from the API.\</span>
+
+<span class="sd">        Attributes</span>
+<span class="sd">        ----------</span>
+<span class="sd">        broadcasts : list</span>
+<span class="sd">            The list of broadcasts.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">broadcasts</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">contents</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">broadcasts</span> <span class="o">=</span> <span class="n">contents</span>
@@ -1965,6 +2416,7 @@ Broadcasts        </code>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Broadcast</span>
+<span class="sd">            The top broadcast.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">broadcasts</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span>
@@ -1980,7 +2432,7 @@ Broadcasts        </code>
 
     <span class="k">def</span> <span class="nf">has_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Broadcast</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Checks if the broadcast list contains a broadcast with a specified id.</span>
+<span class="sd">        Checks if the broadcast list contains a broadcast with a specified ID.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1990,6 +2442,7 @@ Broadcasts        </code>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Broadcast</span>
+<span class="sd">            If the broadcast list contains a broadcast with the specified ID.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">broadcast</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">broadcasts</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">broadcast</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
@@ -2008,6 +2461,7 @@ Broadcasts        </code>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Broadcast</span>
+<span class="sd">            If the broadcast list contains a broadcast from the specified user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">broadcast</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">broadcasts</span><span class="p">:</span>
@@ -2032,6 +2486,61 @@ Broadcasts        </code>
 
 
 
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="pyrpan.models.Broadcasts.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>The broadcast list class containing all of the broadcasts fetched from the API.</p>
+
+<p><strong>Attributes:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>broadcasts</code></td>
+        <td><code>list</code></td>
+        <td><p>The list of broadcasts.</p></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>pyrpan\models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The broadcast list class containing all of the broadcasts fetched from the API.\</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    broadcasts : list</span>
+<span class="sd">        The list of broadcasts.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">broadcasts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">contents</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">broadcasts</span> <span class="o">=</span> <span class="n">contents</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
 
 
   <div class="doc doc-object doc-method">
@@ -2046,7 +2555,7 @@ Broadcasts        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Checks if the broadcast list contains a broadcast with a specified id.</p>
+      <p>Checks if the broadcast list contains a broadcast with a specified ID.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -2078,7 +2587,7 @@ Broadcasts        </code>
   <tbody>
     <tr>
       <td><code>Union[pyrpan.models.Broadcast, bool]</code></td>
-      <td></td>
+      <td><p>If the broadcast list contains a broadcast with the specified ID.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2086,7 +2595,7 @@ Broadcasts        </code>
           <summary>Source code in <code>pyrpan\models.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">has_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Broadcast</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Checks if the broadcast list contains a broadcast with a specified id.</span>
+<span class="sd">    Checks if the broadcast list contains a broadcast with a specified ID.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -2096,6 +2605,7 @@ Broadcasts        </code>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Broadcast</span>
+<span class="sd">        If the broadcast list contains a broadcast with the specified ID.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">broadcast</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">broadcasts</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">broadcast</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
@@ -2153,7 +2663,7 @@ Broadcasts        </code>
   <tbody>
     <tr>
       <td><code>Union[pyrpan.models.Broadcast, bool]</code></td>
-      <td></td>
+      <td><p>If the broadcast list contains a broadcast from the specified user.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2171,6 +2681,7 @@ Broadcasts        </code>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Broadcast</span>
+<span class="sd">        If the broadcast list contains a broadcast from the specified user.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">broadcast</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">broadcasts</span><span class="p">:</span>
@@ -2229,7 +2740,7 @@ Broadcasts        </code>
   <tbody>
     <tr>
       <td><code>Optional[pyrpan.models.Broadcast]</code></td>
-      <td></td>
+      <td><p>The top broadcast.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2247,6 +2758,7 @@ Broadcasts        </code>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Broadcast</span>
+<span class="sd">        The top broadcast.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">broadcasts</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">None</span>
