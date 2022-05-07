@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "PyRPAN"
-version = "1.0.2a"
+version = "1.0.3a"
 description = "An API wrapper for interacting with the RPAN API."
 authors = ["b1uejay27 <hello@b1uejay27.tech>"]
 license = "MIT"

@@ -4,8 +4,7 @@ from datetime import datetime, timezone
 from typing import Optional
 
 import aiohttp
-from asyncpraw import Reddit
-from asyncpraw.models import Submission
+import asyncpraw
 from expiringdict import ExpiringDict
 
 from . import constants
@@ -43,11 +42,9 @@ class PyRPAN:
         """
         self.api_url = "https://strapi.reddit.com"
         self.top_broadcasts_cache = ExpiringDict(max_len=3, max_age_seconds=300)
-        self.reddit = Reddit(
-            client_id=client_id,
-            client_secret=client_secret,
-            user_agent="Reddit Public Access Network (RPAN) API Wrapper by b1uejay27.",
-        )
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.user_agent = "Reddit Public Access Network (RPAN) API Wrapper by b1uejay27."
         self._session = None
         self._lock = asyncio.Lock()
 
@@ -173,12 +170,17 @@ class PyRPAN:
         Broadcast
             The found last broadcast or None.
         """
-        user = await self.reddit.redditor(username)
-
-        async for submission in user.submissions.new(limit=25):
-            if self.is_rpan_broadcast(submission.url):
-                return await self.submission_to_broadcast(submission)
-        return None
+        async with asyncpraw.Reddit(
+            client_id=self.client_id,
+            client_secret=self.client_secret,
+            user_agent=self.user_agent,
+        ) as reddit:
+            user = await reddit.redditor(username)
+            async for submission in user.submissions.new(limit=25):
+                if self.is_rpan_broadcast(submission.url):
+                    broadcast = await self.get_broadcast(id=submission.id)
+                    return broadcast
+            return None
 
     async def get_top_broadcasts(self, time_period: str = None) -> tuple:
         """
@@ -213,48 +215,23 @@ class PyRPAN:
             return self.top_broadcasts_cache[time_period], time_period
         else:
             top_broadcasts = {}
-            for subreddit in constants.RPAN_SUBREDDITS:
-                subreddit = await self.reddit.subreddit(subreddit)
-                async for submission in subreddit.search(
-                    'flair_name:"Broadcast"',
-                    sort="top",
-                    time_filter=time_period,
-                    limit=1,
-                ):
-                    top_broadcasts[subreddit] = submission
+            async with asyncpraw.Reddit(
+                client_id=self.client_id,
+                client_secret=self.client_secret,
+                user_agent=self.user_agent,
+            ) as reddit:
+                for subreddit in constants.RPAN_SUBREDDITS:
+                    subreddit = await reddit.subreddit(subreddit)
+                    async for submission in subreddit.search(
+                        'flair_name:"Broadcast"',
+                        sort="top",
+                        time_filter=time_period,
+                        limit=1,
+                    ):
+                        top_broadcasts[subreddit] = submission
 
             self.top_broadcasts_cache[time_period] = top_broadcasts
             return top_broadcasts, time_period
-
-    async def submission_to_broadcast(self, submission: Submission) -> Optional[Broadcast]:
-        """
-        Turns a PRAW submission into a broadcast class.
-
-        Parameters
-        ----------
-        submission : str
-            The submission to turn into a broadcast class.
-
-        Returns
-        -------
-        Broadcast
-            The broadcast class.
-        """
-        return Broadcast(
-            payload={
-                "post": {
-                    "id": submission.fullname,
-                    "title": submission.title,
-                    "url": submission.url,
-                    "authorInfo": {"name": submission.author.name},
-                    "subreddit": {"name": submission.subreddit.display_name},
-                },
-                "stream": {
-                    "state": "IS_LIVE",  # TODO: Switch stream state
-                    "publish_at": submission.created_utc,
-                },
-            }
-        )
 
     def format_broadcast_timestamp(self, timestamp: int) -> str:
         """
