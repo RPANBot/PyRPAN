@@ -388,13 +388,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#pyrpan.client.PyRPAN.submission_to_broadcast" class="md-nav__link">
-    submission_to_broadcast()
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -602,13 +595,6 @@
           <li class="md-nav__item">
   <a href="#pyrpan.client.PyRPAN.is_rpan_broadcast" class="md-nav__link">
     is_rpan_broadcast()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pyrpan.client.PyRPAN.submission_to_broadcast" class="md-nav__link">
-    submission_to_broadcast()
   </a>
   
 </li>
@@ -837,15 +823,13 @@ PyRPAN        </code>
 <span class="sd">        client_id : str</span>
 <span class="sd">            Client ID generated from creating an app at https://old.reddit.com/prefs/apps/.</span>
 <span class="sd">        client_secret : str</span>
-<span class="sd">            Client Secrt generated from creating an app at https://old.reddit.com/prefs/apps/.</span>
+<span class="sd">            Client Secret generated from creating an app at https://old.reddit.com/prefs/apps/.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">api_url</span> <span class="o">=</span> <span class="s2">&quot;https://strapi.reddit.com&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">top_broadcasts_cache</span> <span class="o">=</span> <span class="n">ExpiringDict</span><span class="p">(</span><span class="n">max_len</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_age_seconds</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reddit</span> <span class="o">=</span> <span class="n">Reddit</span><span class="p">(</span>
-            <span class="n">client_id</span><span class="o">=</span><span class="n">client_id</span><span class="p">,</span>
-            <span class="n">client_secret</span><span class="o">=</span><span class="n">client_secret</span><span class="p">,</span>
-            <span class="n">user_agent</span><span class="o">=</span><span class="s2">&quot;Reddit Public Access Network (RPAN) API Wrapper by b1uejay27.&quot;</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_agent</span> <span class="o">=</span> <span class="s2">&quot;Reddit Public Access Network (RPAN) API Wrapper by b1uejay27.&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 
@@ -971,12 +955,17 @@ PyRPAN        </code>
 <span class="sd">        Broadcast</span>
 <span class="sd">            The found last broadcast or None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">user</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">reddit</span><span class="o">.</span><span class="n">redditor</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
-
-        <span class="k">async</span> <span class="k">for</span> <span class="n">submission</span> <span class="ow">in</span> <span class="n">user</span><span class="o">.</span><span class="n">submissions</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_rpan_broadcast</span><span class="p">(</span><span class="n">submission</span><span class="o">.</span><span class="n">url</span><span class="p">):</span>
-                <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">submission_to_broadcast</span><span class="p">(</span><span class="n">submission</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">asyncpraw</span><span class="o">.</span><span class="n">Reddit</span><span class="p">(</span>
+            <span class="n">client_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+            <span class="n">client_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
+            <span class="n">user_agent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user_agent</span><span class="p">,</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">reddit</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="k">await</span> <span class="n">reddit</span><span class="o">.</span><span class="n">redditor</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+            <span class="k">async</span> <span class="k">for</span> <span class="n">submission</span> <span class="ow">in</span> <span class="n">user</span><span class="o">.</span><span class="n">submissions</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_rpan_broadcast</span><span class="p">(</span><span class="n">submission</span><span class="o">.</span><span class="n">url</span><span class="p">):</span>
+                    <span class="n">broadcast</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_broadcast</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">submission</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">broadcast</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">get_top_broadcasts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_period</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1011,48 +1000,23 @@ PyRPAN        </code>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_broadcasts_cache</span><span class="p">[</span><span class="n">time_period</span><span class="p">],</span> <span class="n">time_period</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">top_broadcasts</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">subreddit</span> <span class="ow">in</span> <span class="n">constants</span><span class="o">.</span><span class="n">RPAN_SUBREDDITS</span><span class="p">:</span>
-                <span class="n">subreddit</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">reddit</span><span class="o">.</span><span class="n">subreddit</span><span class="p">(</span><span class="n">subreddit</span><span class="p">)</span>
-                <span class="k">async</span> <span class="k">for</span> <span class="n">submission</span> <span class="ow">in</span> <span class="n">subreddit</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
-                    <span class="s1">&#39;flair_name:&quot;Broadcast&quot;&#39;</span><span class="p">,</span>
-                    <span class="n">sort</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span>
-                    <span class="n">time_filter</span><span class="o">=</span><span class="n">time_period</span><span class="p">,</span>
-                    <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                <span class="p">):</span>
-                    <span class="n">top_broadcasts</span><span class="p">[</span><span class="n">subreddit</span><span class="p">]</span> <span class="o">=</span> <span class="n">submission</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">asyncpraw</span><span class="o">.</span><span class="n">Reddit</span><span class="p">(</span>
+                <span class="n">client_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+                <span class="n">client_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
+                <span class="n">user_agent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user_agent</span><span class="p">,</span>
+            <span class="p">)</span> <span class="k">as</span> <span class="n">reddit</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">subreddit</span> <span class="ow">in</span> <span class="n">constants</span><span class="o">.</span><span class="n">RPAN_SUBREDDITS</span><span class="p">:</span>
+                    <span class="n">subreddit</span> <span class="o">=</span> <span class="k">await</span> <span class="n">reddit</span><span class="o">.</span><span class="n">subreddit</span><span class="p">(</span><span class="n">subreddit</span><span class="p">)</span>
+                    <span class="k">async</span> <span class="k">for</span> <span class="n">submission</span> <span class="ow">in</span> <span class="n">subreddit</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+                        <span class="s1">&#39;flair_name:&quot;Broadcast&quot;&#39;</span><span class="p">,</span>
+                        <span class="n">sort</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span>
+                        <span class="n">time_filter</span><span class="o">=</span><span class="n">time_period</span><span class="p">,</span>
+                        <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="p">):</span>
+                        <span class="n">top_broadcasts</span><span class="p">[</span><span class="n">subreddit</span><span class="p">]</span> <span class="o">=</span> <span class="n">submission</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">top_broadcasts_cache</span><span class="p">[</span><span class="n">time_period</span><span class="p">]</span> <span class="o">=</span> <span class="n">top_broadcasts</span>
             <span class="k">return</span> <span class="n">top_broadcasts</span><span class="p">,</span> <span class="n">time_period</span>
-
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">submission_to_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission</span><span class="p">:</span> <span class="n">Submission</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Broadcast</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Turns a PRAW submission into a broadcast class.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        submission : str</span>
-<span class="sd">            The submission to turn into a broadcast class.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        Broadcast</span>
-<span class="sd">            The broadcast class.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">Broadcast</span><span class="p">(</span>
-            <span class="n">payload</span><span class="o">=</span><span class="p">{</span>
-                <span class="s2">&quot;post&quot;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">submission</span><span class="o">.</span><span class="n">fullname</span><span class="p">,</span>
-                    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">submission</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
-                    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">submission</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
-                    <span class="s2">&quot;authorInfo&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">submission</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">name</span><span class="p">},</span>
-                    <span class="s2">&quot;subreddit&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">submission</span><span class="o">.</span><span class="n">subreddit</span><span class="o">.</span><span class="n">display_name</span><span class="p">},</span>
-                <span class="p">},</span>
-                <span class="s2">&quot;stream&quot;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;IS_LIVE&quot;</span><span class="p">,</span>  <span class="c1"># TODO: Switch stream state</span>
-                    <span class="s2">&quot;publish_at&quot;</span><span class="p">:</span> <span class="n">submission</span><span class="o">.</span><span class="n">created_utc</span><span class="p">,</span>
-                <span class="p">},</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">format_broadcast_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1140,7 +1104,7 @@ PyRPAN        </code>
       <tr>
         <td><code>client_secret</code></td>
         <td><code>str</code></td>
-        <td><p>Client Secrt generated from creating an app at https://old.reddit.com/prefs/apps/.</p></td>
+        <td><p>Client Secret generated from creating an app at https://old.reddit.com/prefs/apps/.</p></td>
         <td><em>required</em></td>
       </tr>
   </tbody>
@@ -1156,15 +1120,13 @@ PyRPAN        </code>
 <span class="sd">    client_id : str</span>
 <span class="sd">        Client ID generated from creating an app at https://old.reddit.com/prefs/apps/.</span>
 <span class="sd">    client_secret : str</span>
-<span class="sd">        Client Secrt generated from creating an app at https://old.reddit.com/prefs/apps/.</span>
+<span class="sd">        Client Secret generated from creating an app at https://old.reddit.com/prefs/apps/.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">api_url</span> <span class="o">=</span> <span class="s2">&quot;https://strapi.reddit.com&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">top_broadcasts_cache</span> <span class="o">=</span> <span class="n">ExpiringDict</span><span class="p">(</span><span class="n">max_len</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_age_seconds</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">reddit</span> <span class="o">=</span> <span class="n">Reddit</span><span class="p">(</span>
-        <span class="n">client_id</span><span class="o">=</span><span class="n">client_id</span><span class="p">,</span>
-        <span class="n">client_secret</span><span class="o">=</span><span class="n">client_secret</span><span class="p">,</span>
-        <span class="n">user_agent</span><span class="o">=</span><span class="s2">&quot;Reddit Public Access Network (RPAN) API Wrapper by b1uejay27.&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">user_agent</span> <span class="o">=</span> <span class="s2">&quot;Reddit Public Access Network (RPAN) API Wrapper by b1uejay27.&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 </code></pre></div>
@@ -1610,12 +1572,17 @@ PyRPAN        </code>
 <span class="sd">    Broadcast</span>
 <span class="sd">        The found last broadcast or None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">user</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">reddit</span><span class="o">.</span><span class="n">redditor</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
-
-    <span class="k">async</span> <span class="k">for</span> <span class="n">submission</span> <span class="ow">in</span> <span class="n">user</span><span class="o">.</span><span class="n">submissions</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_rpan_broadcast</span><span class="p">(</span><span class="n">submission</span><span class="o">.</span><span class="n">url</span><span class="p">):</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">submission_to_broadcast</span><span class="p">(</span><span class="n">submission</span><span class="p">)</span>
-    <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">asyncpraw</span><span class="o">.</span><span class="n">Reddit</span><span class="p">(</span>
+        <span class="n">client_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+        <span class="n">client_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
+        <span class="n">user_agent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user_agent</span><span class="p">,</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">reddit</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="k">await</span> <span class="n">reddit</span><span class="o">.</span><span class="n">redditor</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">submission</span> <span class="ow">in</span> <span class="n">user</span><span class="o">.</span><span class="n">submissions</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_rpan_broadcast</span><span class="p">(</span><span class="n">submission</span><span class="o">.</span><span class="n">url</span><span class="p">):</span>
+                <span class="n">broadcast</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_broadcast</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">submission</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">broadcast</span>
+        <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div>
         </details>
     </div>
@@ -1710,15 +1677,20 @@ PyRPAN        </code>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_broadcasts_cache</span><span class="p">[</span><span class="n">time_period</span><span class="p">],</span> <span class="n">time_period</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">top_broadcasts</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">subreddit</span> <span class="ow">in</span> <span class="n">constants</span><span class="o">.</span><span class="n">RPAN_SUBREDDITS</span><span class="p">:</span>
-            <span class="n">subreddit</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">reddit</span><span class="o">.</span><span class="n">subreddit</span><span class="p">(</span><span class="n">subreddit</span><span class="p">)</span>
-            <span class="k">async</span> <span class="k">for</span> <span class="n">submission</span> <span class="ow">in</span> <span class="n">subreddit</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
-                <span class="s1">&#39;flair_name:&quot;Broadcast&quot;&#39;</span><span class="p">,</span>
-                <span class="n">sort</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span>
-                <span class="n">time_filter</span><span class="o">=</span><span class="n">time_period</span><span class="p">,</span>
-                <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-            <span class="p">):</span>
-                <span class="n">top_broadcasts</span><span class="p">[</span><span class="n">subreddit</span><span class="p">]</span> <span class="o">=</span> <span class="n">submission</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">asyncpraw</span><span class="o">.</span><span class="n">Reddit</span><span class="p">(</span>
+            <span class="n">client_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+            <span class="n">client_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
+            <span class="n">user_agent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user_agent</span><span class="p">,</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">reddit</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">subreddit</span> <span class="ow">in</span> <span class="n">constants</span><span class="o">.</span><span class="n">RPAN_SUBREDDITS</span><span class="p">:</span>
+                <span class="n">subreddit</span> <span class="o">=</span> <span class="k">await</span> <span class="n">reddit</span><span class="o">.</span><span class="n">subreddit</span><span class="p">(</span><span class="n">subreddit</span><span class="p">)</span>
+                <span class="k">async</span> <span class="k">for</span> <span class="n">submission</span> <span class="ow">in</span> <span class="n">subreddit</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+                    <span class="s1">&#39;flair_name:&quot;Broadcast&quot;&#39;</span><span class="p">,</span>
+                    <span class="n">sort</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span>
+                    <span class="n">time_filter</span><span class="o">=</span><span class="n">time_period</span><span class="p">,</span>
+                    <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="p">):</span>
+                    <span class="n">top_broadcasts</span><span class="p">[</span><span class="n">subreddit</span><span class="p">]</span> <span class="o">=</span> <span class="n">submission</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">top_broadcasts_cache</span><span class="p">[</span><span class="n">time_period</span><span class="p">]</span> <span class="o">=</span> <span class="n">top_broadcasts</span>
         <span class="k">return</span> <span class="n">top_broadcasts</span><span class="p">,</span> <span class="n">time_period</span>
@@ -1859,96 +1831,6 @@ PyRPAN        </code>
 
 
 
-  <div class="doc doc-object doc-method">
-
-
-
-<h4 id="pyrpan.client.PyRPAN.submission_to_broadcast" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">submission_to_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-async"><code>async</code></small>
-  </span>
-
-</h4>
-
-    <div class="doc doc-contents ">
-
-      <p>Turns a PRAW submission into a broadcast class.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>submission</code></td>
-        <td><code>Submission</code></td>
-        <td><p>The submission to turn into a broadcast class.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Optional[pyrpan.models.Broadcast]</code></td>
-      <td><p>The broadcast class.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pyrpan\client.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">submission_to_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission</span><span class="p">:</span> <span class="n">Submission</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Broadcast</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Turns a PRAW submission into a broadcast class.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    submission : str</span>
-<span class="sd">        The submission to turn into a broadcast class.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    Broadcast</span>
-<span class="sd">        The broadcast class.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Broadcast</span><span class="p">(</span>
-        <span class="n">payload</span><span class="o">=</span><span class="p">{</span>
-            <span class="s2">&quot;post&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">submission</span><span class="o">.</span><span class="n">fullname</span><span class="p">,</span>
-                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">submission</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
-                <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">submission</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
-                <span class="s2">&quot;authorInfo&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">submission</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">name</span><span class="p">},</span>
-                <span class="s2">&quot;subreddit&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">submission</span><span class="o">.</span><span class="n">subreddit</span><span class="o">.</span><span class="n">display_name</span><span class="p">},</span>
-            <span class="p">},</span>
-            <span class="s2">&quot;stream&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;IS_LIVE&quot;</span><span class="p">,</span>  <span class="c1"># TODO: Switch stream state</span>
-                <span class="s2">&quot;publish_at&quot;</span><span class="p">:</span> <span class="n">submission</span><span class="o">.</span><span class="n">created_utc</span><span class="p">,</span>
-            <span class="p">},</span>
-        <span class="p">}</span>
-    <span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
 
 
   </div>
@@ -2074,7 +1956,7 @@ Broadcast        </code>
         <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;score&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">comment_count</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;comment_count&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comment_count</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;commentCount&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;authorInfo&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">author_name</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;authorInfo&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -2328,7 +2210,7 @@ Broadcast        </code>
     <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;score&quot;</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">comment_count</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;comment_count&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">comment_count</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;commentCount&quot;</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;authorInfo&quot;</span><span class="p">]:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">author_name</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">][</span><span class="s2">&quot;authorInfo&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
