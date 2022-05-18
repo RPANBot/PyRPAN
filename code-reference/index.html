@@ -340,13 +340,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#pyrpan.client.PyRPAN.format_broadcast_timestamp" class="md-nav__link">
-    format_broadcast_timestamp()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#pyrpan.client.PyRPAN.get_broadcast" class="md-nav__link">
     get_broadcast()
   </a>
@@ -546,13 +539,6 @@
           <li class="md-nav__item">
   <a href="#pyrpan.client.PyRPAN.fetch" class="md-nav__link">
     fetch()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pyrpan.client.PyRPAN.format_broadcast_timestamp" class="md-nav__link">
-    format_broadcast_timestamp()
   </a>
   
 </li>
@@ -876,14 +862,8 @@ PyRPAN        </code>
                 <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">204</span><span class="p">]:</span>
                     <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
-                <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">InvalidRequest</span><span class="p">(</span><span class="s2">&quot;Bad request - Request performed was invalid.&quot;</span><span class="p">)</span>
-
                 <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">429</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">InvalidRequest</span><span class="p">(</span><span class="s2">&quot;Too many requests - Slow down your requests.&quot;</span><span class="p">)</span>
-
-                <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">500</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">InvalidRequest</span><span class="p">(</span><span class="s2">&quot;Internal Server Error - Something went wrong.&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">data</span>
 
@@ -913,7 +893,13 @@ PyRPAN        </code>
 <span class="sd">            The retrived broadcast or None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;/broadcasts/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;failure&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">APIError</span><span class="p">(</span><span class="s2">&quot;The RPAN API seems to be having some issues at the moment, please try again later.&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;video not found&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidRequest</span><span class="p">(</span><span class="s2">&quot;That broadcast was not found.&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
             <span class="n">payload</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
 
             <span class="k">return</span> <span class="n">Broadcast</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
@@ -930,7 +916,14 @@ PyRPAN        </code>
 <span class="sd">            The retrived broadcasts or None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="s2">&quot;/broadcasts&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;failure&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">APIError</span><span class="p">(</span><span class="s2">&quot;The RPAN API seems to be having some issues at the moment, please try again later.&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;video not found&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidRequest</span><span class="p">(</span><span class="s2">&quot;That broadcast was not found.&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
             <span class="n">broadcasts</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]):</span>
                 <span class="k">for</span> <span class="n">broadcast</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]:</span>
@@ -1017,22 +1010,6 @@ PyRPAN        </code>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">top_broadcasts_cache</span><span class="p">[</span><span class="n">time_period</span><span class="p">]</span> <span class="o">=</span> <span class="n">top_broadcasts</span>
             <span class="k">return</span> <span class="n">top_broadcasts</span><span class="p">,</span> <span class="n">time_period</span>
-
-    <span class="k">def</span> <span class="nf">format_broadcast_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Formats a timestamp of a broadcast. This is used by the broadcast notifications.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        timestamp : int</span>
-<span class="sd">            The timestamp to format.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        str</span>
-<span class="sd">            The timestamp in a set format.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">timestamp</span><span class="p">),</span> <span class="n">tz</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">is_rpan_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">link</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1271,89 +1248,10 @@ PyRPAN        </code>
             <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">204</span><span class="p">]:</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
-            <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">InvalidRequest</span><span class="p">(</span><span class="s2">&quot;Bad request - Request performed was invalid.&quot;</span><span class="p">)</span>
-
             <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">429</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">InvalidRequest</span><span class="p">(</span><span class="s2">&quot;Too many requests - Slow down your requests.&quot;</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">500</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">InvalidRequest</span><span class="p">(</span><span class="s2">&quot;Internal Server Error - Something went wrong.&quot;</span><span class="p">)</span>
-
     <span class="k">return</span> <span class="n">data</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h4 id="pyrpan.client.PyRPAN.format_broadcast_timestamp" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">format_broadcast_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span></code>
-
-
-</h4>
-
-    <div class="doc doc-contents ">
-
-      <p>Formats a timestamp of a broadcast. This is used by the broadcast notifications.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>timestamp</code></td>
-        <td><code>int</code></td>
-        <td><p>The timestamp to format.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>str</code></td>
-      <td><p>The timestamp in a set format.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>pyrpan\client.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">format_broadcast_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Formats a timestamp of a broadcast. This is used by the broadcast notifications.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    timestamp : int</span>
-<span class="sd">        The timestamp to format.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    str</span>
-<span class="sd">        The timestamp in a set format.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">timestamp</span><span class="p">),</span> <span class="n">tz</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -1429,7 +1327,13 @@ PyRPAN        </code>
 <span class="sd">        The retrived broadcast or None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;/broadcasts/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;failure&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">APIError</span><span class="p">(</span><span class="s2">&quot;The RPAN API seems to be having some issues at the moment, please try again later.&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;video not found&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidRequest</span><span class="p">(</span><span class="s2">&quot;That broadcast was not found.&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
         <span class="n">payload</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="n">Broadcast</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
@@ -1487,7 +1391,14 @@ PyRPAN        </code>
 <span class="sd">        The retrived broadcasts or None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="s2">&quot;/broadcasts&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
+
+    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;failure&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">APIError</span><span class="p">(</span><span class="s2">&quot;The RPAN API seems to be having some issues at the moment, please try again later.&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;video not found&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidRequest</span><span class="p">(</span><span class="s2">&quot;That broadcast was not found.&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
         <span class="n">broadcasts</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]):</span>
             <span class="k">for</span> <span class="n">broadcast</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]:</span>
