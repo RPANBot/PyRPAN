@@ -1,4 +1,4 @@
 * text=auto
 *.md text linguist-detectable
-*.yml YAML linguist-detectable
-*.toml TOML linguist-detectable
+*.yml text linguist-detectable
+*.toml text linguist-detectable
