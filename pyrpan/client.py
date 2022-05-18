@@ -1,6 +1,5 @@
 import asyncio
 import logging
-from datetime import datetime, timezone
 from typing import Optional
 
 import aiohttp
@@ -8,7 +7,7 @@ import asyncpraw
 from expiringdict import ExpiringDict
 
 from . import constants
-from .exceptions import InvalidRequest
+from .exceptions import APIError, InvalidRequest
 from .models import Broadcast, Broadcasts
 
 logger = logging.getLogger(__name__)
@@ -91,14 +90,8 @@ class PyRPAN:
                 if res.status in [200, 201, 204]:
                     data = await res.json()
 
-                if res.status == 400:
-                    raise InvalidRequest("Bad request - Request performed was invalid.")
-
                 if res.status == 429:
                     raise InvalidRequest("Too many requests - Slow down your requests.")
-
-                if res.status == 500:
-                    raise InvalidRequest("Internal Server Error - Something went wrong.")
 
         return data
 
@@ -128,7 +121,13 @@ class PyRPAN:
             The retrived broadcast or None.
         """
         data = await self.fetch(method="GET", route=f"/broadcasts/{id}")
-        if data["status"] == "success":
+        if data["status"] == "failure":
+            raise APIError("The RPAN API seems to be having some issues at the moment, please try again later.")
+
+        elif data["status"] == "video not found":
+            raise InvalidRequest("That broadcast was not found.")
+
+        elif data["status"] == "success":
             payload = data["data"]
 
             return Broadcast(payload=payload)
@@ -145,7 +144,14 @@ class PyRPAN:
             The retrived broadcasts or None.
         """
         data = await self.fetch(method="GET", route="/broadcasts")
-        if data["status"] == "success":
+
+        if data["status"] == "failure":
+            raise APIError("The RPAN API seems to be having some issues at the moment, please try again later.")
+
+        elif data["status"] == "video not found":
+            raise InvalidRequest("That broadcast was not found.")
+
+        elif data["status"] == "success":
             broadcasts = []
             if len(data["data"]):
                 for broadcast in data["data"]:
@@ -232,22 +238,6 @@ class PyRPAN:
 
             self.top_broadcasts_cache[time_period] = top_broadcasts
             return top_broadcasts, time_period
-
-    def format_broadcast_timestamp(self, timestamp: int) -> str:
-        """
-        Formats a timestamp of a broadcast. This is used by the broadcast notifications.
-
-        Parameters
-        ----------
-        timestamp : int
-            The timestamp to format.
-
-        Returns
-        -------
-        str
-            The timestamp in a set format.
-        """
-        return datetime.fromtimestamp(int(timestamp), tz=timezone.utc)
 
     def is_rpan_broadcast(self, link: str) -> bool:
         """
