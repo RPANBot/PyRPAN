@@ -121,18 +121,13 @@ class PyRPAN:
             The retrived broadcast or None.
         """
         data = await self.fetch(method="GET", route=f"/broadcasts/{id}")
-        if data["status"] == "failure":
+        if data is None:
             raise APIError("The RPAN API seems to be having some issues at the moment, please try again later.")
 
-        elif data["status"] == "video not found":
-            raise InvalidRequest("That broadcast was not found.")
-
-        elif data["status"] == "success":
+        if data["status"] == "success":
             payload = data["data"]
 
             return Broadcast(payload=payload)
-        else:
-            return None
 
     async def get_broadcasts(self) -> Optional[Broadcasts]:
         """
@@ -145,13 +140,7 @@ class PyRPAN:
         """
         data = await self.fetch(method="GET", route="/broadcasts")
 
-        if data["status"] == "failure":
-            raise APIError("The RPAN API seems to be having some issues at the moment, please try again later.")
-
-        elif data["status"] == "video not found":
-            raise InvalidRequest("That broadcast was not found.")
-
-        elif data["status"] == "success":
+        if data["status"] == "success":
             broadcasts = []
             if len(data["data"]):
                 for broadcast in data["data"]:
@@ -160,7 +149,7 @@ class PyRPAN:
 
                 return Broadcasts(contents=broadcasts)
         else:
-            return None
+            raise APIError("The RPAN API seems to be having some issues at the moment, please try again later.")
 
     async def get_last_broadcast(self, username: str) -> Optional[Broadcast]:
         """
