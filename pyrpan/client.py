@@ -122,7 +122,10 @@ class PyRPAN:
         """
         data = await self.fetch(method="GET", route=f"/broadcasts/{id}")
         if data is None:
-            raise APIError("The RPAN API seems to be having some issues at the moment, please try again later.")
+            logger.warning("Re-trying request due to API error.")
+            data = await self.fetch(method="GET", route=f"/broadcasts/{id}")
+            if data is None:
+                raise APIError("The RPAN API seems to be having some issues at the moment, please try again later.")
 
         if data["status"] == "success":
             payload = data["data"]
