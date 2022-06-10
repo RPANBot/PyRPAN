@@ -6,6 +6,23 @@
 <a href="https://pypi.org/project/flake8/">
     <img height="20" alt="Flake badge" src="https://img.shields.io/badge/code%20style-flake8-blue.svg">
 </a>
+    
+<a href="https://pypistats.org/packages/PyRPAN">
+    <img height="20" alt="Stats Badge" src="https://img.shields.io/pypi/dm/PyRPAN">
+</a>
+    
+<a href="https://github.com/RPANBot/PyRPAN/blob/main/LICENSE">
+    <img height="20" alt="Stats Badge" src="https://img.shields.io/github/license/RPANBot/PyRPAN">
+</a>
+    
+<a href="https://github.com/RPANBot/PyRPAN/stargazers">
+    <img height="20" alt="Stats Badge" src="https://img.shields.io/github/stars/RPANBot/PyRPAN">
+</a>
+    
+<a href="https://discord.gg/DfBp4x4">
+    <img height="20" alt="Stats Badge" src="https://img.shields.io/discord/725895559973699645.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2">
+</a>
+
 </p>
 
 ### About
@@ -31,6 +48,6 @@ asyncio.run(main())
 ```
 
 ### Links
-**Source Code**: [github.com/b1uejay27/PyRPAN](https://github.com/b1uejay27/PyRPAN)<br>
+**Source Code**: [github.com/RPANBot/PyRPAN](https://github.com/RPANBot/PyRPAN)<br>
 **PyPi**: [pypi.org/project/PyRPAN](https://pypi.org/project/PyRPAN)<br>
 **Discord Server**: [discord.gg/DfBp4x4](https://discord.gg/DfBp4x4)
