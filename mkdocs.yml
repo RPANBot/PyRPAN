@@ -1,8 +1,8 @@
 site_name: PyRPAN
-site_url: https://b1uejay27.github.io/pyrpan
+site_url: https://rpanbot.github.io/pyrpan
 
-repo_url: https://github.com/b1uejay27/PyRPAN/
-repo_name: b1uejay27/PyRPAN
+repo_url: https://github.com/RPANBot/PyRPAN/
+repo_name: RPANBot/PyRPAN
 
 theme:
   palette:
