@@ -28,7 +28,7 @@ aiohttp = "^3.8.1"
 expiringdict = "^1.2.1"
 
 [tool.poetry.dev-dependencies]
-black = "^22.3.0"
+black = "^22.6.0"
 flake8 = "^4.0.1"
 isort = "^5.10.1"
 flake8-bugbear = "^22.6.22"
