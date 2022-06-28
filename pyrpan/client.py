@@ -218,6 +218,7 @@ class PyRPAN:
                 client_id=self.client_id,
                 client_secret=self.client_secret,
                 user_agent=self.user_agent,
+                check_for_updates=False,
             ) as reddit:
                 for subreddit in constants.RPAN_SUBREDDITS:
                     subreddit = await reddit.subreddit(subreddit)
