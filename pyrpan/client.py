@@ -172,6 +172,7 @@ class PyRPAN:
             client_id=self.client_id,
             client_secret=self.client_secret,
             user_agent=self.user_agent,
+            check_for_updates=False,
         ) as reddit:
             user = await reddit.redditor(username)
             async for submission in user.submissions.new(limit=25):
