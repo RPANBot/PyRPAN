@@ -1,5 +1,5 @@
 from .client import PyRPAN
-from .exceptions import InvalidRequest
+from .exceptions import APIError, InvalidRequest, RateLimitExceeded
 from .models import Broadcast, Broadcasts
 
 __all__ = (
@@ -7,4 +7,6 @@ __all__ = (
     "Broadcast",
     "Broadcasts",
     "InvalidRequest",
+    "APIError",
+    "RateLimitExceeded",
 )

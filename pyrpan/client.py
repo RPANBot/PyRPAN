@@ -7,7 +7,7 @@ import asyncpraw
 from expiringdict import ExpiringDict
 
 from . import constants
-from .exceptions import APIError, InvalidRequest
+from .exceptions import APIError, InvalidRequest, RateLimitExceeded
 from .models import Broadcast, Broadcasts
 
 logger = logging.getLogger(__name__)
@@ -90,8 +90,14 @@ class PyRPAN:
                 if res.status in [200, 201, 204]:
                     data = await res.json()
 
-                if res.status == 429:
-                    raise InvalidRequest("Too many requests - Slow down your requests.")
+                elif res.status == 404:
+                    raise InvalidRequest("The requested resource was not found.")
+
+                elif res.status == 429:
+                    raise RateLimitExceeded("Too many requests - Slow down your requests.")
+
+                elif res.status == 500:
+                    raise APIError("The RPAN API seems to be having some issues at the moment, please try again later.")
 
         return data
 
@@ -121,12 +127,6 @@ class PyRPAN:
             The retrived broadcast or None.
         """
         data = await self.fetch(method="GET", route=f"/broadcasts/{id}")
-        if data is None:
-            logger.warning("Re-trying request due to API error.")
-            data = await self.fetch(method="GET", route=f"/broadcasts/{id}")
-            if data is None:
-                raise APIError("The RPAN API seems to be having some issues at the moment, please try again later.")
-
         if data["status"] == "success":
             payload = data["data"]
 
@@ -151,8 +151,6 @@ class PyRPAN:
                     broadcasts.append(Broadcast(payload=payload))
 
                 return Broadcasts(contents=broadcasts)
-        else:
-            raise APIError("The RPAN API seems to be having some issues at the moment, please try again later.")
 
     async def get_last_broadcast(self, username: str) -> Optional[Broadcast]:
         """
@@ -172,7 +170,6 @@ class PyRPAN:
             client_id=self.client_id,
             client_secret=self.client_secret,
             user_agent=self.user_agent,
-            check_for_updates=False,
         ) as reddit:
             user = await reddit.redditor(username)
             async for submission in user.submissions.new(limit=25):
@@ -218,7 +215,6 @@ class PyRPAN:
                 client_id=self.client_id,
                 client_secret=self.client_secret,
                 user_agent=self.user_agent,
-                check_for_updates=False,
             ) as reddit:
                 for subreddit in constants.RPAN_SUBREDDITS:
                     subreddit = await reddit.subreddit(subreddit)
