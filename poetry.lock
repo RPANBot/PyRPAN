@@ -114,10 +114,10 @@ aiohttp = "*"
 yarl = "*"
 
 [package.extras]
+test = ["vcrpy (==4.0.2)", "testfixtures (>4.13.2,<7)", "pytest-vcr", "pytest", "mock (>=0.8)", "asynctest (>=0.13.0)"]
+lint = ["pydocstyle", "pre-commit", "flynt", "flake8", "black"]
+dev = ["vcrpy (==4.0.2)", "testfixtures (>4.13.2,<7)", "pytest-vcr", "pytest", "mock (>=0.8)", "asynctest (>=0.13.0)", "pydocstyle", "pre-commit", "flynt", "flake8", "black"]
 ci = ["coveralls"]
-dev = ["black", "flake8", "flynt", "pre-commit", "pydocstyle", "asynctest (>=0.13.0)", "mock (>=0.8)", "pytest", "pytest-vcr", "testfixtures (>4.13.2,<7)", "vcrpy (==4.0.2)"]
-lint = ["black", "flake8", "flynt", "pre-commit", "pydocstyle"]
-test = ["asynctest (>=0.13.0)", "mock (>=0.8)", "pytest", "pytest-vcr", "testfixtures (>4.13.2,<7)", "vcrpy (==4.0.2)"]
 
 [[package]]
 name = "attrs"
@@ -225,7 +225,7 @@ optional = false
 python-versions = "*"
 
 [package.extras]
-tests = ["dill", "coverage", "coveralls", "mock", "nose"]
+tests = ["nose", "mock", "coveralls", "coverage", "dill"]
 
 [[package]]
 name = "filelock"
@@ -254,14 +254,14 @@ pyflakes = ">=2.4.0,<2.5.0"
 
 [[package]]
 name = "flake8-annotations"
-version = "2.9.0"
+version = "2.9.1"
 description = "Flake8 Type Annotation Checks"
 category = "dev"
 optional = false
 python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-attrs = ">=21.4,<22.0"
+attrs = ">=21.4"
 flake8 = ">=3.7"
 
 [[package]]
@@ -299,7 +299,7 @@ python-versions = "*"
 python-dateutil = ">=2.8.1"
 
 [package.extras]
-dev = ["twine", "markdown", "flake8", "wheel"]
+dev = ["wheel", "flake8", "markdown", "twine"]
 
 [[package]]
 name = "identify"
@@ -787,7 +787,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "934188cf1b48c09442fbc7cee4c27b6e78ef91466594e5f26a74fd78fbb546bb"
+content-hash = "dab679ef138fb155cee2e9e2df803d27b2199618fec304dd63d9453ab8cc9db2"
 
 [metadata.files]
 aiofiles = [
@@ -966,8 +966,8 @@ flake8 = [
     {file = "flake8-4.0.1.tar.gz", hash = "sha256:806e034dda44114815e23c16ef92f95c91e4c71100ff52813adf7132a6ad870d"},
 ]
 flake8-annotations = [
-    {file = "flake8-annotations-2.9.0.tar.gz", hash = "sha256:63fb3f538970b6a8dfd84125cf5af16f7b22e52d5032acb3b7eb23645ecbda9b"},
-    {file = "flake8_annotations-2.9.0-py3-none-any.whl", hash = "sha256:84f46de2964cb18fccea968d9eafce7cf857e34d913d515120795b9af6498d56"},
+    {file = "flake8-annotations-2.9.1.tar.gz", hash = "sha256:11f09efb99ae63c8f9d6b492b75fe147fbc323179fddfe00b2e56eefeca42f57"},
+    {file = "flake8_annotations-2.9.1-py3-none-any.whl", hash = "sha256:a4385158a7a9fc8af1d8820a2f4c8d03387997006a83f5f8bfe5bc6085bdf88a"},
 ]
 flake8-bugbear = [
     {file = "flake8-bugbear-22.7.1.tar.gz", hash = "sha256:e450976a07e4f9d6c043d4f72b17ec1baf717fe37f7997009c8ae58064f88305"},
