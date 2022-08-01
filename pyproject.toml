@@ -30,7 +30,7 @@ requests = "^2.28.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.6.0"
-flake8 = "^4.0.1"
+flake8 = "^5.0.2"
 isort = "^5.10.1"
 flake8-bugbear = "^22.7.1"
 flake8-annotations = "^2.9.0"
